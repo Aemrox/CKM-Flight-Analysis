@@ -1,0 +1,50 @@
+<table class="table sortable">
+  <tr>
+    <th>Carrier</th>
+    <th>Flights</th>
+    <th>Cancellation Rate</th>
+    <th>Average Departure Delay (in minutes)</th>
+    <th>Average Arrival Delay (in minutes)</th>
+    <th>Late Departure Rate</th>
+    <th>Late Arrival Rate</th>
+    <th>Early Arrival Rate</th>
+    <th>Skytrax Rating</th>
+    <th>Smart Score</th>
+  </tr>
+  <% carriers.each do |carrier| %>
+    <tr>
+      <div class="in-line">
+      <td> <p class = "text-center">
+        <%= link_to carrier.name, carrier_path(carrier.id) %>
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.flights %>
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.cancellation_rate %>%
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.avg_departure_delay%>
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.avg_arrival_delay%>
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.late_departure_rate%>%
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.late_arrival_rate%>%
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.early_arrival_rate%>%
+      </p></td>
+      <td> <p class = "text-center">
+        <%= carrier.rating%>/10
+      </p></td>
+      <td> <h4 class = "text-center" style="color:<%= carrier.smart_score_color %>">
+        <%= carrier.smart_score%>
+      </h4></td>
+      </div>
+    </tr>
+  <% end %>
+</table>

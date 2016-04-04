@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <table class="table sortable">
+    <tr>
+      <th>Carrier</th>
+      <th>Cancellations</th>
+      <th>Cancellation Rate</th>
+      <th>Early Arrival Rate</th>
+      <th>Late Arrival Rate</th>
+      <th>Late Departure Rate</th>
+    </tr>
+    <tr>
+      <td> <%= carrier.name %> </td>
+      <td> <%= carrier.cancellations %> </td>
+      <td> <%= carrier.cancellation_rate %>% </td>
+      <td> <%= carrier.early_arrival_rate %>% </td>
+      <td> <%= carrier.late_arrival_rate %>% </td>
+      <td> <%= carrier.late_departure_rate %>% </td>
+    </tr>
+  </table>
+</div>
+
+
+<br>
+
+<div class="panel panel-default">
+  <div class="panel-heading"> <h2 class="text-center"> Main Scores </h2>  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <%= render partial: "stat_card", locals: {stat_title: "Skytrax Rating", color: carrier.rating_color[1], stat: carrier.rating_color[0], suffix: "/10"} %>
+    </div>
+    <div class="col-md-4">
+      <%= render partial: "stat_card", locals: {stat_title: "Flights", color: carrier.flights_color[1], stat: carrier.flights_color[0], suffix: ""} %>
+    </div>
+    <div class="col-md-4">
+      <%= render partial: "stat_card", locals: {stat_title: "Destinations", color: carrier.destinations_color[1], stat: carrier.destinations_color[0], suffix: ""} %>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading"> <h2 class="text-center"> Derived Stats </h2>  </div>
+  <div class="row">
+    <% carrier.key_value_colors.each do |stat, pair|%>
+      <div class="col-md-6">
+        <%= render partial: "stat_card", locals: {stat_title: stat, color: pair[1], stat: pair[0], suffix: pair[2]} %>
+      </div>
+    <% end %>
+  </div>
+</div>

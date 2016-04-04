@@ -1,0 +1,31 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+body {
+  background-color: #252839;
+  background-image: url('airplane-blur.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.navbar {
+  background-color: #0d1827;
+  border-color: transparent;
+}
+
+.transparent {
+  opacity: 0.4;
+}
+
+.padded {
+  padding-left: 10px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.in-line {
+  display: inline;
+}

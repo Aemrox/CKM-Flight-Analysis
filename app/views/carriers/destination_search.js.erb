@@ -1,0 +1,2 @@
+$('#destination_table').empty();
+$('#destination_table').append("<%= j render partial: 'carriers/destination_table', locals: {city: @city, d_hash: @d_hash} %>");

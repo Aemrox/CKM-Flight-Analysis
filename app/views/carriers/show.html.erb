@@ -1,0 +1,80 @@
+
+
+<div class = "container">
+
+  <div class="panel">
+    <h2 class = "padded"> <%= @carrier.name %> </h2>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
+      <li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Benchmarks</a></li>
+      <li role="presentation"><a href="#destinations" aria-controls="destinations" role="tab" data-toggle="tab">Destinations</a></li>
+    </ul>
+  </div>
+
+
+
+  <!-- Tab panes -->
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="summary">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"> <h2 class="text-center"> <%= @carrier.name %> Stats </h2>  </div>
+        <!-- Summary -->
+        <%= render partial: "summary", locals: {carrier: @carrier} %>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="stats">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"> <h2 class="text-center"> <%= @carrier.name %> Stats vs. Benchmarks </h2>  </div>
+        <!-- Stats -->
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="text-center"> Average Delay (in minutes): </h4>
+            <canvas id="stat_chart">
+
+            </canvas>
+          </div>
+          <div class="col-md-3">
+            <h4 class="text-center"> Cancellation Rate: </h4>
+            <canvas id="cancel_rate">
+
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Destinations  -->
+    <div role="tabpanel" class="tab-pane" id="destinations">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"> Destinations </div>
+
+        <!-- Table -->
+        <table class="table sortable">
+          <tr>
+            <th>City</th>
+            <th>Flights</th>
+          </tr>
+          <% @carrier.destination_hash.each do |city, flights| %>
+            <tr>
+              <td> <%= city %> </td>
+              <td> <%= flights %> </td>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="container">
+
+
+
+
+</div>

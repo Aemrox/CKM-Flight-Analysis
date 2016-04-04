@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading"> <h2 class="text-center"> Flights to <%= city %> </h2>  </div>
+
+
+  <table class="table sortable">
+    <tr>
+      <th>Carrier</th>
+      <th>Flights</th>
+    </tr>
+    <% d_hash.each do |carrier, flights| %>
+      <tr>
+        <td> <%= carrier %> </td>
+        <td> <%= flights %> </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  destinations: MyString
+  flights: 1
+  cancellations: 1
+  total_taxi_in: 1
+  total_taxi_out: 1
+  total_arr_delay: 1
+  total_dep_delay: 1
+  carrier_delay: 1
+  late_aircraft_delay: 1
+  weather_delay: 1
+
+two:
+  name: MyString
+  destinations: MyString
+  flights: 1
+  cancellations: 1
+  total_taxi_in: 1
+  total_taxi_out: 1
+  total_arr_delay: 1
+  total_dep_delay: 1
+  carrier_delay: 1
+  late_aircraft_delay: 1
+  weather_delay: 1

@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="panel">
+    <h2 class = "padded"> All Carriers </h2>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#table" aria-controls="table" role="tab" data-toggle="tab">Carrier Data</a></li>
+      <li role="presentation"><a href="#charts" aria-controls="charts" role="tab" data-toggle="tab">Charts</a></li>
+      <li role="presentation"><a href="#destinations" aria-controls="destinations" role="tab" data-toggle="tab">Destinations</a></li>
+    </ul>
+  </div>
+
+  <!-- Tab panes -->
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="table">
+      <div class="panel panel-default">
+        <%= render partial: "carrier_table", locals: {carriers: @carriers} %>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="charts">
+      <div class="panel panel-default">
+        <div class="panel-heading"> <h2 class="text-center"> Average Delay Times in Minutes </h2>  </div>
+        <canvas id="delay_chart" width="900" height="500"></canvas>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading"> <h2 class="text-center"> Average Taxi Times in Minutes </h2>  </div>
+        <canvas id="taxi_chart" width="900" height="500"></canvas>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading"> <h2 class="text-center"> Percentage of Flights that are Late or Cancelled</h2>  </div>
+        <canvas id="rate_chart" width="900" height="500"></canvas>
+      </div>
+    </div>
+    <!-- Destinations  -->
+    <div role="tabpanel" class="tab-pane" id="destinations">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+
+        <%= render 'destination_search' %>
+
+        <!-- Table -->
+        <div id="destination_table">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,6 @@
+<div class = "form-inline">
+   <%= form_tag destination_search_path, class: "form-inline", remote: true do%>
+     <%= select_tag(:query, options_for_select(Flight::DESTINATIONS)) %>
+     <%= submit_tag "Find Carriers" %>
+   <% end %>
+</div>
