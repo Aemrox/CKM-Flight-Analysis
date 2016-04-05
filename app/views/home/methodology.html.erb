@@ -1,0 +1,138 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Methodology</h1>
+    <p>
+      In order to pick an airline I had to first come up with several metrics for defining a successful airline. <br><br>
+
+      Based on the different metrics and measurable points available in data provided,
+      along with some common sense assumptions on CKM's general needs, I defined a handful
+      of metrics that I believe defines a successful airline.
+    </p>
+
+    <h3>Metrics of a Successful Airline</h3>
+    <ol>
+      <li><p>
+        A high volume of flights leaving New York City, where CKM's headquarters are located
+      </p></li>
+      <li><p>
+        A variety of destinations available from New York City
+      </p></li>
+      <li><p>
+        A variety of flights available on different days
+      </p></li>
+      <li><p>
+        A low number of cancelled flights, to ensure reliability
+      </p></li>
+      <li><p>
+        Timely departure and arrival, including time spent on the tarmac waiting to embark or dock
+      </p></li>
+      <li><p>
+        Delay's should be consistent if they occur
+      </p></li>
+      <li><p>
+        The airline should be generally comfortable
+      </p></li>
+    </ol>
+
+    <h3>Assumptions and Hypothesis</h3>
+
+    <p>
+      Given these metrics, I think it's prudent to take a look at the assumptions I made regarding the provided data, which were important in guiding these decisions.
+    </p>
+
+    <ol>
+      <li> <p>
+        Flying direct is a priority
+      </p></li>
+      <li><p>
+          CKM is headquartered in NYC, and needs relatively easy access to the rest of the US
+        </p></li>
+      <li><p>
+        As a result of the above assumption, data from flights not originating or terminating in the NYC Metropolitan area should not be considered an accurate barometer of an Airline's quality
+      </p></li>
+      <li><p>
+        This data sample is large enough to draw conclusions about the airline
+      </p></li>
+      <li><p>
+        The data set is largely accurate and remains relevant despite it's age
+      </p></li>
+      <li><p>
+        Timeliness is the most important factor regarding the selection of an airline
+      </p></li>
+    </ol>
+    <br><br>
+    <p>
+      The above assumptions allowed me to cut down the dataset significantly <strong> from nearly 1.4 million entries to just above 167,000.</strong>
+      The logic behind making this assumption was that given the density around New York City, airlines may perform abnormally with respect to their average performance. This assumption was a key one, so I
+      took the time to verify it. In my initial pass through the data, I found that on the whole, average regarding delay time and cancellation rate, varied widely between flights that originated or terminated in NYC and those that did not.
+      <br><br>
+      One assumption I made that given more time I may rethink is the assumption that I should only consider direct flights. The reasoning behind this assumption was largely to limit the dataset put in front of me.
+      If I were to consider all connecting flights, this would multiply my dataset exponentially, and in addition, muddy the decision regarding a primary airline, as I would be forced to consider mixing amongst different airlines.
+      Given the added complexity of attempting to account for connecting flights, I made the assumption to fly direct.
+      <br><br>
+      The assumption of timeliness being the most impactful performance metric was made on the grounds of both common sense, and as one of the most immediate options given the nature of the data I was tasked with analyzing.
+      Most of the metrics presented had something to do with either the time and date of the flight, or the amount of time surrounding the various phases of the flight. In addition, given the high variability of price (both amongst airlines and over time),
+      I found the timeliness was one of the data points most likely to stay consistent, even three and a half years into the future.
+      <br><br>
+      Given these vague hypotheses, I sought to break these down to points that could be calculated using data. Below is an outline of each point of data I pursued.
+    </p>
+    <h3>KPI's</h3>
+    <ol>
+      <li><p><strong>Number of Flights</strong>:
+        Total number of Flights is a solid indicator of general volume and availability regarding an carrier.
+      </p></li>
+      <li><p><strong>Number of Destinations</strong>:
+        Total number of Destinations available from New York City is an important indicator in picking an airline. Given that I have no knowledge of the markets in which CKM generally works, I weighted all destinations the same.
+      </p></li>
+      <li><p><strong>Cancellation Rate</strong>:
+        Total Cancellations / Number of Flights <br>--- A good indicator of general reliability, a low cancellation rate would mean more reliable.
+      </p></li>
+      <li><p><strong>Flight Availability by Day</strong>:
+        Relative Number of Flights Available by each Day of the Week <br>--- This point turned out to be less significant than I thought. It was largely standard amongst all airlines, with there being a dip on Saturday and bump on Sunday.
+      <li><p><strong>Average Delay Time (Departure and Arrival)</strong>:
+        Sum of Delay Time/(Number of Flights - Number of Cancellations) <br>--- Would allow me to compare airlines based on delay time. Since no delays are reported for cancelled flights, they must be accounted for to reach an accurate mean.
+      </p></li>
+      <li><p><strong>Breakdown of Different Delays</strong>:
+        Sum of Delay Type/(Number of Flights - Number of Cancellations) <br>--- Another point that proved to be less useful than I imagined. The various delays were largely random, with the exception of Carrier Induced Delay. While this point varied amongst the different airlines, and is a solid indicator for airline performance, I found it largely redundant given the other metrics surrounding general delays.
+      </p></li>
+      <li><p><strong>Average Taxi Time (Departure and Arrival)</strong>:
+        Sum of Taxi Time/(Number of Flights - Number of Cancellations) <br>--- Would allow me to compare airlines based on time spent on runway. Includes the same caveat for cancelled flights as delays.
+      </p></li>
+      <li><p><strong>Standard Deviation of Delay Time (Departure and Arrival)</strong>:
+        <br>--- While the mean of Delay Time is more immediately useful, a lower standard deviation would indicate more consistency around delay times, signalling a level of reliability.
+      </p></li>
+      <li><p><strong>Percentage of Flights Arriving Early or Late</strong>:
+        Flights Arriving Early or Late/(Number of Flights - Number of Cancellations) <br>--- Another view on timeliness aside from the mean. This is a more holistic view as it accounts for every piece of the process. Early was defined as beating the estimated arrival time by any margin, whereas late was defined as missing the estimated arrival time by at least 5 minutes.
+      </p></li>
+      <li><p><strong>Percentage of Flights Departing Late</strong>:
+        Flights Departing Late/(Number of Flights - Number of Cancellations) <br>--- Much like the above KPI, a more holistic view on departure delays. Late is again defined as missing the estimated departure time by 5 minutes or more.
+      </p></li>
+      <li><p><strong>General Rating of the Airline</strong>:
+        This piece of data was not available in the data given, however I find it to be important that when you fly, the experience is a stress free as possible. I used Skytrax, a well-regarded, autonomous, and partially crowdsourced airline rating firm.
+        Skytrax rates airlines on several metrics, including comfort, customer service, reliability, space available, baggage available, and general value. Skytrax rates on a 1-10 system, and more information can be found <%= link_to "here", "http://www.airlinequality.com/" %>
+      </p></li>
+    </ol>
+    <br><br>
+    <p>
+      <strong>Note:</strong> In general, I found arrival times to be more important than departure times, as departure times represented an inconvenience, whereas missing arrival time could have meaningful impacts to the success of a business trip.
+    </p>
+
+    <h3>The Process</h3>
+    <p>
+      With my assumptions and hypotheses in place, I began my analysis from a high level using a tool called <%= link_to "Tableau.", "http://www.tableau.com/" %> Tableau allowed me to quickly parse through the data and generate quick charts on the fly.
+      This was very useful in verifying assumptions, and determining on a high level the general variance and value of the various KPIs I defined for myself. I recorded my analysis, and have provided the Tableau file I generated for download. To download please click on the link in the navigation bar, or simply check in the email I sent.
+      <br><br> With Tableau, I sorted the data based on assumptions I made regarding NYC as a terminal city, and was able to explore each of the KPIs above. Most of my negative findings were recorded above.
+      <br><br> Once I had a good handle of the data, I had to decide how I wanted to present it. Given my experience with Rails, I thought an interactive application, which not only provided some illustrative charts, but allowed the user to autonomously dig into my analysis themselves was the best way to go.
+      <br><br>That being decided, I began to import the CSV data into this rails application. I filtered as I went to try to keep the size of my database manageable, and the speed of the application itself optimized. Given that Tableau allowed me to explore and sanitize the data at a high level, I focused on using rails to hone in on what I thought would the variable calculations a user would make.
+      With that in mind, I created a model for each flight, which recorded all of the basic information represented in the CSV. This was a necessary step to create my main calculation model: the carrier itself.
+      <br><br>The Carrier had information like total number of flights, cancellations, taxi time, delays in minutes of each type, number of late and early flights. From there, calculating the mean, standard deviation and rate of each data point was fairly trivial.
+      All of the <%= link_to "source code is viewable on Github", "https://github.com/Aemrox/CKM-Flight-Analysis"%>, but the majority of the analysis takes place in the model ( <%= link_to "App/Models/Carrier.rb", "https://github.com/Aemrox/CKM-Flight-Analysis/blob/master/app/models/carrier.rb" %> ).
+      Having the information broken down by Carrier made it very easy to generate an interactive application, which allowed you to see and sort each carrier by my KPIs and display visual aids such as charts and  color coded analysis of the carrier scores versus Benchmarks.
+      <br><br> In order to do that, I needed to generate useful Benchmarks based on the data at hand. Using a mix of Tableau and Ruby, I developed airline agnostic benchmarks (again limited to NYC), by which I could judge each individual KPI from each carrier. This made generating charts and color coded scores very easy. Each airline has a list of it's statistics, with a color indicating it's relation to the Benchmark (green is below, red is above).
+      <br><br> Lastly, I needed to aggregate and weight all of these pieces of information to make a decision. To do that I developed a simple algorithm to generate a "Smart Score" for each carrier, which allowed me to come to my Answer
+      <br><br> <strong>Read on for more information:</strong>
+    </p>
+    <%= link_to "Smart Score", smart_score_path, class: "btn btn-large btn-primary" %>
+    <%= link_to "The Answer", answer_path, class: "btn btn-large btn-primary" %>
+  </div>
+</div>

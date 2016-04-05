@@ -15,5 +15,4 @@
 //= require sorttable
 //= require chart
 //= require bootstrap-sprockets
-//= require turbolinks
 //= require_tree .

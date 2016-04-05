@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">The Answer:</h1>
+    <center><img src="http://southfultonchamber.com/wp-content/uploads/2012/07/delta.jpg" alt="" /></center>
+    <p>
+      After careful analysis, I came to the conclusion that Delta provided the best experience based on CKM's needs.
+      In order to examine why, let's take a look at Delta's Smart Score breakdown.
+    </p>
+    <div class="panel panel-default">
+      <div class="panel-heading"> <h2 class="text-center"> Delta Smart Score</h2>  </div>
+      <%= render partial: '/carriers/smart_score_breakdown', locals: {carrier: @delta} %>
+    </div>
+    <p>
+      As you can see, Delta overperformed in many categories. It is high volume airline that serves a number of destinations.
+      These 20 points (split between <strong>Flights</strong> and <strong>Destinations</strong>) are often the separation between competant smaller airline, and larger airlines with comprehensive coverage.
+      Other smaller airlines, such as <%= link_to "Alaska Airlines", carrier_path(44) %>, did quite well in most analysis categories, but are not a suitable fit as
+      a primary airline carrier due to the lack of coverage. This is the reason flight and destination count are weighted so heavily.
+      <br><br>
+      What separates Delta from other airlines in our rubric is largely it's impressive performance regarding delays.
+      Delta manages to keep it's mean departure delay time below our standard of 5 minutes late. This,
+      along with often arriving ahead of schedule, gives Delta a solid boost in points, setting it apart from other similar competitors,
+       such as <%= link_to "Jet Blue", carrier_path(50) %>.
+      <br><br>
+      Though the math behind the analysis has been detailed, I do want to empahsize that the largest part in deciding a "victor" came in
+      determinig the <%= link_to "Smart Score Rubric", smart_score_path %>. By intentionally weighting Arrival delays over Departure delays,
+      and demphasizing time spent on the runway, this was tilted to Delta's favor, away from Jet Blue, who came in as a close second.
+      <br><br>
+      I stand by my choices in creating the rubric, which are based on the assumptions I stated in the <%= link_to "Methodoloy", methodology_path %>.
+      I intentionally made this site as interactive as possible so you can explore the data for yourself, and see which other airlines also came close.
+      In addition, feel free to explore the destinations tab in the <%= link_to "Carriers Page", carriers_path %>. This will allow you to find suitable airlines,
+      regardless of where you choose to fly.
+      <br><br>
+      Given a bit more time, I would have liked to have a page where the user could adjust the rubric, allowing them to make their own decisions regarding what is important to them in picking an airline. But in the meantime:
+      <br><br>
+      <strong>Delta FTW</strong>
+    </p>
+  </div>
+</div>

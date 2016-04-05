@@ -1,0 +1,34 @@
+<table class="table sortable">
+  <tr>
+    <th><h2>Criteria</h2></th>
+    <th><h2>Points Awarded</h2></th>
+    <th><h2>Corresponding Statistic</h2></th>
+  </tr>
+  <tr>
+    <td><h3>Flights</h3></td>
+    <td><%= render partial: '/carriers/stat_score', locals: {color:carrier.flights_color[1], score:carrier.flight_score, suffix:"/10"} %></td>
+    <td><h3><%= carrier.flights%></h3> </td>
+  </tr>
+  <tr>
+    <td><h3>Destinations</h3></td>
+    <td><%= render partial: '/carriers/stat_score', locals: {color:carrier.destinations_color[1], score:carrier.destination_score, suffix:"/10"} %></td>
+    <td><h3><%= carrier.destinations_color[0]%></h3> </td>
+  </tr>
+  <tr>
+    <td><h3>Rating</h3></td>
+    <td><%= render partial: '/carriers/stat_score', locals: {color:carrier.rating_color[1], score:carrier.rating, suffix:"/10"} %></td>
+    <td><h3><%= carrier.rating_color[0]%></h3> </td>
+  </tr>
+  <% Carrier::SMART_SCORE_BREAKDOWN.keys.each do |cat| %>
+  <tr>
+    <td><h3><%= cat.to_s.titleize %></h3></td>
+    <td><%= render partial: '/carriers/stat_score', locals: {color:carrier.value_color(cat)[1], score:(carrier.normalized_z_score(cat) * Carrier::SMART_SCORE_BREAKDOWN[cat]), suffix:"/#{Carrier::SMART_SCORE_BREAKDOWN[cat]}" } %></td>
+    <td><h3><%= carrier.value_color(cat)[0].to_s + carrier.value_color(cat)[2]%></h3> </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td><h3>Total</h3></td>
+    <td><%= render partial: '/carriers/stat_score', locals: {color:carrier.smart_score_color, score:(carrier.smart_z_score), suffix:"/100" } %></td>
+    <td><h3>-</h3> </td>
+  </tr>
+</table>

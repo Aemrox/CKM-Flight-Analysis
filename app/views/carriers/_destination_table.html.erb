@@ -7,9 +7,9 @@
       <th>Carrier</th>
       <th>Flights</th>
     </tr>
-    <% d_hash.each do |carrier, flights| %>
+    <% d_hash.each do |id, flights| %>
       <tr>
-        <td> <%= carrier %> </td>
+        <td> <%= link_to Carrier.find(id).name, Carrier.find(id) %> </td>
         <td> <%= flights %> </td>
       </tr>
     <% end %>

@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1 class="text-center">Smart Score</h1>
+    <p>
+      Smart Score is a composite aggregate score from 1 to 100 which takes in all the KPIs I defined in the <%= link_to "Methodology Section", methodology_path %>, compares them against the benchmark, and weights their value according to a rubric.
+      The rubric was assembled based on the assumptions I made and can be found below:
+    </p>
+    <table class ="table">
+      <tr>
+        <th><h2>Criteria</h2></th>
+        <th><h2>Point Value</h2></th>
+      </tr>
+      <% Carrier::SMART_SCORE_RUBRIC.each do |criteria, points| %>
+      <tr>
+        <th><%= criteria.to_s.titleize %></th>
+        <th><%= points %></th>
+      </tr>
+      <% end %>
+    </table>
+    <p>
+      For <strong>Ratings</strong>, I simply took the 1-10 Skytrax rating.
+      For <strong>Flights</strong>, an airline got 10 points for over 20,000, 5 for over 10,000, 3 for over 5,000 and for anything less they received the number of flights divided by 2,000.
+      This was based on the distribution of flights, with preference given to those with sufficient coverage.
+      <strong>Destinations</strong> was scored on a similar principal. Carriers with over 20 destinations received 10 points, over 15 destinations received 7, over 10 received 5, and anything less received 0 points.
+      <br><br>The remaining 10 categories were awarded points based on a normalized Z-score. The mean and standard deviation of each category was calculated amongst carriers, resulting in a Z-score for each category.
+      The Z-score was then normalized between 0 and 1, assuming a spread of 1 standard deviation. This yielded a percent by which the rubric was multiplied, awarding a score.
+      <br><br> Initially I used a different calculation to determine the Smart Score. The formula was a rough approximation aimed at rewarding over performers:
+      <br><br> The distance between value and the mean was divided by twice the range created by adding the value to the mean, then adding 0.5 to normalize. This new value had its distance to the mean doubled.
+      While this resulted in a useful approximation the heavily rewarded positive outliers and heavily penalized negative outliers. I decided a standard Z-score analysis was effective given the fairly standard distribution.
+      <br><br> Smart Score breakdowns can be seen on each Carrier's individual page.
+    </p>
+    <strong>Read on for a less technical analysis of my decision:</strong>
+    <%= link_to "The Answer", answer_path, class: "btn btn-large btn-primary" %>
+
+  </div>
+</div>

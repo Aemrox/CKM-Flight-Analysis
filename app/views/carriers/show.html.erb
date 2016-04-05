@@ -9,6 +9,7 @@
       <li role="presentation" class="active"><a href="#summary" aria-controls="summary" role="tab" data-toggle="tab">Summary</a></li>
       <li role="presentation"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Benchmarks</a></li>
       <li role="presentation"><a href="#destinations" aria-controls="destinations" role="tab" data-toggle="tab">Destinations</a></li>
+      <li role="presentation"><a href="#smart_score" aria-controls="smart_score" role="tab" data-toggle="tab">Smart Score</a></li>
     </ul>
   </div>
 
@@ -67,6 +68,15 @@
         </table>
       </div>
     </div>
+    <!-- Smart Score -->
+    <div role="tabpanel" class="tab-pane" id="smart_score">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"> Smart Score </div>
+        <%= render partial: 'smart_score_breakdown', locals: {carrier: @carrier} %>
+      </div>
+    </div>
+
   </div>
 
 </div>

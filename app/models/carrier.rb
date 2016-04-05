@@ -23,20 +23,48 @@ class Carrier < ActiveRecord::Base
     late_departure_rate: 26.90,
     late_arrival_rate: 29.57,
     early_arrival_rate: 64.77
+  }
 
+  ST_DEV = {
+    :cancellation_rate=>2.2676,
+    :avg_departure_delay=>4.0512,
+    :avg_taxi_out=>7.55,
+    :avg_arrival_delay=>5.3924,
+    :avg_taxi_in=>2.476,
+    :std_dev_departure_delay=>20.8923,
+    :std_dev_arrival_delay=>19.7454,
+    :late_departure_rate=>10.0182,
+    :late_arrival_rate=>10.8362,
+    :early_arrival_rate=>19.965
   }
 
   SMART_SCORE_BREAKDOWN ={
     cancellation_rate: 10, #1.59
-    avg_departure_delay: 10, #6.44
-    avg_taxi_out: 5, #14.91
-    avg_arrival_delay: 10, #1.98
-    avg_taxi_in: 5, #6.70
-    std_dev_departure_delay: 5,
-    std_dev_arrival_delay: 5,
-    late_departure_rate: 10,
-    late_arrival_rate: 5,
-    early_arrival_rate: 5,
+    avg_departure_delay: 8, #6.44
+    avg_taxi_out: 4, #14.91
+    avg_arrival_delay: 12, #1.98
+    avg_taxi_in: 6, #6.70
+    std_dev_departure_delay: 4,
+    std_dev_arrival_delay: 6,
+    late_departure_rate: 8,
+    late_arrival_rate: 6,
+    early_arrival_rate: 6,
+  }
+
+  SMART_SCORE_RUBRIC ={
+    number_of_flights: 10,
+    number_of_destinations: 10,
+    rating: 10,
+    cancellation_rate: 10, #1.59
+    average_departure_delay: 8, #6.44
+    average_taxi_out: 4, #14.91
+    average_arrival_delay: 12, #1.98
+    average_taxi_in: 6, #6.70
+    standard_deviation_of_departure_delay: 4,
+    standard_deviation_of_arrival_delay: 6,
+    late_departure_rate: 8,
+    late_arrival_rate: 6,
+    early_arrival_rate: 6,
   }
 
   RATING = {
@@ -63,7 +91,7 @@ class Carrier < ActiveRecord::Base
       carrier_hash = carrier.destination_hash
       carrier_hash.each do |city, flights|
         if city == search_city
-          d_hash[carrier.name] = flights
+          d_hash[carrier.id] = flights
         end
       end
     end
@@ -82,19 +110,19 @@ class Carrier < ActiveRecord::Base
   end
 
   def rating_color
-    color = gradient_color(rating/10)
+    color = gradient_color(rating/10.0)
     [rating, color]
   end
 
   def flights_color
-    percent = [flights/20000, 1].min
+    percent = [flights/20000.0, 1].min
     color = gradient_color(percent)
     [flights, color]
   end
 
   def destinations_color
     destinations = destination_hash.keys.length
-    percent = [destinations/25, 1].min
+    percent = [destinations/25.0, 1].min
     color = gradient_color(percent)
     [destinations, color]
   end
@@ -161,11 +189,11 @@ class Carrier < ActiveRecord::Base
     if flights >20000
       return 10
     elsif flights > 10000
-      return 7
-    elsif flights > 5000
       return 5
+    elsif flights > 5000
+      return 3
     else
-      return (flights/1000.0).round(1)
+      return (flights/2000.0).round(1)
     end
   end
 
@@ -184,17 +212,28 @@ class Carrier < ActiveRecord::Base
 
   def smart_score
     return 0 if flight_score == 0
-    score = key_value_score.values.reduce(:+) #70
+    score = key_value_score.values[0..-2].reduce(:+) #60
+    score += (Carrier::SMART_SCORE_BREAKDOWN[:early_arrival_rate] * diff_percent(Carrier::BENCHMARKS[:early_arrival_rate],early_arrival_rate))#accounting for early_arrival_rate, which needs to be higher not lower - 70
     score += rating #80
     score += flight_score #90
     score += destination_score #100
-    score.nan? ? 0 : score.round(0)
+    score.to_f.nan? ? 0 : score.round(0)
+  end
+
+  def smart_z_score
+    return 0 if flight_score == 0
+    score = key_value_z_score.values.reduce(:+) #70
+    score += rating #80
+    score += flight_score #90
+    score += destination_score #100
+    score.to_f.nan? ? 0 : score.round(0)
   end
 
   def smart_score_color
-    score = smart_score
+    score = smart_z_score
     color = gradient_color(score/100.0)
   end
+
 
   def key_value_score
     Carrier::BENCHMARKS.keys.inject({}) do |memo, stat|
@@ -209,6 +248,54 @@ class Carrier < ActiveRecord::Base
     score = diff_percent(value, benchmark)
   end
 
+  #STANDARD DEVIATION CALCULATION
+
+  def self.key_value_st_dev
+    Carrier::BENCHMARKS.keys.inject({}) do |memo, stat|
+      memo[stat] = Carrier.st_dev(stat)
+      memo
+    end
+  end
+
+  def self.st_dev(stat)
+    mean = Carrier::BENCHMARKS[stat]
+    carrs = Carrier.all
+    sample = carrs.length
+    variance = carrs.map do |carrier|
+      value = carrier.send(stat)
+      (value - mean)**2
+    end
+    sum = variance.reduce(:+)
+    Math.sqrt(sum/sample).round(4)
+  end
+
+  def variable_z_score
+    key_value_z_score.values.reduce(:+) #out of 70
+  end
+
+  def key_value_z_score
+    Carrier::BENCHMARKS.keys.inject({}) do |memo, stat|
+      memo[stat] = normalized_z_score(stat) * Carrier::SMART_SCORE_BREAKDOWN[stat]
+      memo
+    end
+  end
+
+  def z_score(stat)
+    st_dev = Carrier::ST_DEV[stat]
+    mean = Carrier::BENCHMARKS[stat]
+    value = self.send(stat)
+    #Accounting for the fact that early_arrival_rate is better if it's higher
+    if stat != :early_arrival_rate
+      (value - mean)/st_dev
+    else
+      (mean - value)/st_dev
+    end
+  end
+
+  def normalized_z_score(stat)
+    (1 - (z_score(stat) - (-1))/2).round(4)
+  end
+
 #Coloring
 
   def key_value_colors
@@ -220,8 +307,9 @@ class Carrier < ActiveRecord::Base
 
   def value_color(stat)
     value = self.send(stat)
-    benchmark = Carrier::BENCHMARKS[stat]
-    percent = diff_percent(value, benchmark)
+    # benchmark = Carrier::BENCHMARKS[stat]
+    # percent = diff_percent(value, benchmark)
+    percent = normalized_z_score(stat)
     color = gradient_color(percent)
     suffix = (stat.to_s.include?("rate") ? "%" : "mins")
     [value, color, suffix]
@@ -349,10 +437,14 @@ class Carrier < ActiveRecord::Base
     color_string += make_channel(color1[:b], color2[:b], percent) + ")"
   end
 
+  # CORE CALCULATION FORMULA
+
   def diff_percent(base, bench)
-    value = ((bench - base)/(2.0*(bench + base).abs)) + 0.5
-    diff = 1 - value
-    value = (value > 0.5 ? value + (diff/2) : value - (value/2))
+    value = ((bench - base)/(2.0*((bench).abs + (base).abs))) + 0.5
+    dist_from_mean = (0.5 - value).abs
+    value = (value >= 0.5 ? [value + dist_from_mean, 1].max : [value - dist_from_mean, 0].min)
   end
+
+
 
 end
