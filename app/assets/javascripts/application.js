@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require sorttable
 //= require chart
 //= require bootstrap-sprockets
 //= require_tree .
