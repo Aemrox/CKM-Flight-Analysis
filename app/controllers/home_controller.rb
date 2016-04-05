@@ -11,4 +11,9 @@ class HomeController < ApplicationController
 
   def smart_score
   end
+
+  def tableau
+    send_file("#{Rails.root}/public/CKM.twb",
+    filename: "CKM_tableau_analysis.twb")
+  end
 end
