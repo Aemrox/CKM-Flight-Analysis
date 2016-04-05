@@ -27,17 +27,17 @@
         Timely departure and arrival, including time spent on the tarmac waiting to embark or dock
       </p></li>
       <li><p>
-        Delay's should be consistent if they occur
+        Delays should be consistent if they occur
       </p></li>
       <li><p>
-        The airline should be generally comfortable
+        The Airline should be generally comfortable
       </p></li>
     </ol>
 
     <h3>Assumptions and Hypothesis</h3>
 
     <p>
-      Given these metrics, I think it's prudent to take a look at the assumptions I made regarding the provided data, which were important in guiding these decisions.
+      Given these metrics, I think it's prudent to take a look at the assumptions I made regarding the provided data and CKM's needs, which were important in guiding these decisions.
     </p>
 
     <ol>
@@ -45,13 +45,13 @@
         Flying direct is a priority
       </p></li>
       <li><p>
-          CKM is headquartered in NYC, and needs relatively easy access to the rest of the US
+          CKM is headquartered in NYC, and needs relatively complete access to the rest of the US
         </p></li>
       <li><p>
         As a result of the above assumption, data from flights not originating or terminating in the NYC Metropolitan area should not be considered an accurate barometer of an Airline's quality
       </p></li>
       <li><p>
-        This data sample is large enough to draw conclusions about the airline
+        This data sample is large enough to draw conclusions about the carriers
       </p></li>
       <li><p>
         The data set is largely accurate and remains relevant despite it's age
@@ -64,33 +64,33 @@
     <p>
       The above assumptions allowed me to cut down the dataset significantly <strong> from nearly 1.4 million entries to just above 167,000.</strong>
       The logic behind making this assumption was that given the density around New York City, airlines may perform abnormally with respect to their average performance. This assumption was a key one, so I
-      took the time to verify it. In my initial pass through the data, I found that on the whole, average regarding delay time and cancellation rate, varied widely between flights that originated or terminated in NYC and those that did not.
+      took the time to verify it. In my initial pass through the data, I found that on the whole, averages regarding delay time and cancellation rate, varied widely between flights that originated or terminated in NYC and those that did not.
       <br><br>
-      One assumption I made that given more time I may rethink is the assumption that I should only consider direct flights. The reasoning behind this assumption was largely to limit the dataset put in front of me.
+      One assumption I made, that given more time I may rethink, is that I should only consider direct flights. The reasoning behind this assumption was largely to limit the dataset put in front of me.
       If I were to consider all connecting flights, this would multiply my dataset exponentially, and in addition, muddy the decision regarding a primary airline, as I would be forced to consider mixing amongst different airlines.
       Given the added complexity of attempting to account for connecting flights, I made the assumption to fly direct.
       <br><br>
       The assumption of timeliness being the most impactful performance metric was made on the grounds of both common sense, and as one of the most immediate options given the nature of the data I was tasked with analyzing.
       Most of the metrics presented had something to do with either the time and date of the flight, or the amount of time surrounding the various phases of the flight. In addition, given the high variability of price (both amongst airlines and over time),
-      I found the timeliness was one of the data points most likely to stay consistent, even three and a half years into the future.
+      I found that timeliness was one of the data points most likely to stay consistent, even three and a half years into the future.
       <br><br>
       Given these vague hypotheses, I sought to break these down to points that could be calculated using data. Below is an outline of each point of data I pursued.
     </p>
     <h3>KPI's</h3>
     <ol>
       <li><p><strong>Number of Flights</strong>:
-        Total number of Flights is a solid indicator of general volume and availability regarding an carrier.
+        Total number of Flights is a solid indicator of the general volume and availability a carrier is capable of.
       </p></li>
       <li><p><strong>Number of Destinations</strong>:
         Total number of Destinations available from New York City is an important indicator in picking an airline. Given that I have no knowledge of the markets in which CKM generally works, I weighted all destinations the same.
       </p></li>
       <li><p><strong>Cancellation Rate</strong>:
-        Total Cancellations / Number of Flights <br>--- A good indicator of general reliability, a low cancellation rate would mean more reliable.
+        Total Cancellations / Number of Flights <br>--- A good indicator of general reliability, a low cancellation rate would mean more a carrier is reliable.
       </p></li>
       <li><p><strong>Flight Availability by Day</strong>:
         Relative Number of Flights Available by each Day of the Week <br>--- This point turned out to be less significant than I thought. It was largely standard amongst all airlines, with there being a dip on Saturday and bump on Sunday.
       <li><p><strong>Average Delay Time (Departure and Arrival)</strong>:
-        Sum of Delay Time/(Number of Flights - Number of Cancellations) <br>--- Would allow me to compare airlines based on delay time. Since no delays are reported for cancelled flights, they must be accounted for to reach an accurate mean.
+        Sum of Delay Time/(Number of Flights - Number of Cancellations) <br>--- Would allow me to compare airlines based on mean delay time. Since no delays are reported for cancelled flights, they must be accounted for to reach an accurate mean.
       </p></li>
       <li><p><strong>Breakdown of Different Delays</strong>:
         Sum of Delay Type/(Number of Flights - Number of Cancellations) <br>--- Another point that proved to be less useful than I imagined. The various delays were largely random, with the exception of Carrier Induced Delay. While this point varied amongst the different airlines, and is a solid indicator for airline performance, I found it largely redundant given the other metrics surrounding general delays.
@@ -119,13 +119,13 @@
 
     <h3>The Process</h3>
     <p>
-      With my assumptions and hypotheses in place, I began my analysis from a high level using a tool called <%= link_to "Tableau.", "http://www.tableau.com/" %> Tableau allowed me to quickly parse through the data and generate quick charts on the fly.
+      With my assumptions and hypotheses in place, I began my analysis from a high level using a tool called <%= link_to "Tableau.", "http://www.tableau.com/" %> Tableau allowed me to parse through the data and generate quick charts on the fly.
       This was very useful in verifying assumptions, and determining on a high level the general variance and value of the various KPIs I defined for myself. I recorded my analysis, and have provided the Tableau file I generated for download. To download please click on the link in the navigation bar, or simply check in the email I sent.
       <br><br> With Tableau, I sorted the data based on assumptions I made regarding NYC as a terminal city, and was able to explore each of the KPIs above. Most of my negative findings were recorded above.
-      <br><br> Once I had a good handle of the data, I had to decide how I wanted to present it. Given my experience with Rails, I thought an interactive application, which not only provided some illustrative charts, but allowed the user to autonomously dig into my analysis themselves was the best way to go.
-      <br><br>That being decided, I began to import the CSV data into this rails application. I filtered as I went to try to keep the size of my database manageable, and the speed of the application itself optimized. Given that Tableau allowed me to explore and sanitize the data at a high level, I focused on using rails to hone in on what I thought would the variable calculations a user would make.
+      <br><br> Once I had a good handle of the data, I had to decide how I wanted to present it. Given my experience with Rails, I thought an interactive application would not only provide some illustrative charts, but also allow the user to autonomously dig into my analysis themselves.
+      <br><br>That being decided, I began to import the CSV data into this rails application. I filtered as I went to try to keep the size of my database manageable, and the speed of the application itself optimized. Given that Tableau allowed me to explore and sanitize the data at a high level, I focused on using rails to hone in on what I thought would be the variables a user might change.
       With that in mind, I created a model for each flight, which recorded all of the basic information represented in the CSV. This was a necessary step to create my main calculation model: the carrier itself.
-      <br><br>The Carrier had information like total number of flights, cancellations, taxi time, delays in minutes of each type, number of late and early flights. From there, calculating the mean, standard deviation and rate of each data point was fairly trivial.
+      <br><br>The Carrier had information like total number of flights, cancellations, taxi time, delays in minutes of each type, and the number of late and early flights. From there, calculating the mean, standard deviation and rate of each data point was fairly trivial.
       All of the <%= link_to "source code is viewable on Github", "https://github.com/Aemrox/CKM-Flight-Analysis"%>, but the majority of the analysis takes place in the model ( <%= link_to "App/Models/Carrier.rb", "https://github.com/Aemrox/CKM-Flight-Analysis/blob/master/app/models/carrier.rb" %> ).
       Having the information broken down by Carrier made it very easy to generate an interactive application, which allowed you to see and sort each carrier by my KPIs and display visual aids such as charts and  color coded analysis of the carrier scores versus Benchmarks.
       <br><br> In order to do that, I needed to generate useful Benchmarks based on the data at hand. Using a mix of Tableau and Ruby, I developed airline agnostic benchmarks (again limited to NYC), by which I could judge each individual KPI from each carrier. This made generating charts and color coded scores very easy. Each airline has a list of it's statistics, with a color indicating it's relation to the Benchmark (green is below, red is above).
