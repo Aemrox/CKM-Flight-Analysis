@@ -4004,3 +4004,75 @@ Processing by CarriersController#show as JSON
   Parameters: {"id"=>"50"}
   [1m[36mCarrier Load (0.2ms)[0m  [1mSELECT  "carriers".* FROM "carriers" WHERE "carriers"."id" = $1 LIMIT 1[0m  [["id", 50]]
 Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/" for ::1 at 2016-04-05 01:36:34 -0400
+Processing by HomeController#index as HTML
+  Rendered home/index.html.erb within layouts/application (1.5ms)
+  Rendered layouts/_navbar.html.erb (0.5ms)
+Completed 200 OK in 200ms (Views: 200.1ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/airplane-blur.jpg" for ::1 at 2016-04-05 01:36:34 -0400
+
+
+Started GET "/delay_chart" for ::1 at 2016-04-05 01:36:34 -0400
+Processing by CarriersController#delay_chart as JSON
+  [1m[35mCarrier Load (2.7ms)[0m  SELECT "carriers".* FROM "carriers"
+Completed 200 OK in 4ms (Views: 0.3ms | ActiveRecord: 2.7ms)
+
+
+Started GET "/taxi_chart" for ::1 at 2016-04-05 01:36:34 -0400
+Processing by CarriersController#taxi_chart as JSON
+  [1m[36mCarrier Load (0.4ms)[0m  [1mSELECT "carriers".* FROM "carriers"[0m
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/rate_chart" for ::1 at 2016-04-05 01:36:34 -0400
+Processing by CarriersController#rate_chart as JSON
+  [1m[35mCarrier Load (0.3ms)[0m  SELECT "carriers".* FROM "carriers"
+Completed 200 OK in 3ms (Views: 0.7ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/answer" for ::1 at 2016-04-05 01:36:36 -0400
+Processing by HomeController#answer as HTML
+  [1m[36mCarrier Load (0.2ms)[0m  [1mSELECT  "carriers".* FROM "carriers" WHERE "carriers"."id" = $1 LIMIT 1[0m  [["id", 46]]
+  Rendered carriers/_stat_score.html.erb (0.2ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.1ms)
+  Rendered carriers/_stat_score.html.erb (0.0ms)
+  Rendered carriers/_stat_score.html.erb (0.0ms)
+  Rendered carriers/_stat_score.html.erb (0.2ms)
+  Rendered carriers/_stat_score.html.erb (0.0ms)
+  Rendered carriers/_stat_score.html.erb (0.0ms)
+  Rendered carriers/_stat_score.html.erb (0.0ms)
+  Rendered carriers/_smart_score_breakdown.html.erb (33.7ms)
+  Rendered home/answer.html.erb within layouts/application (37.9ms)
+  Rendered layouts/_navbar.html.erb (0.2ms)
+Completed 200 OK in 100ms (Views: 98.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/assets/airplane-blur.jpg" for ::1 at 2016-04-05 01:36:37 -0400
+
+
+Started GET "/delay_chart" for ::1 at 2016-04-05 01:36:37 -0400
+Processing by CarriersController#delay_chart as JSON
+  [1m[35mCarrier Load (0.3ms)[0m  SELECT "carriers".* FROM "carriers"
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/taxi_chart" for ::1 at 2016-04-05 01:36:37 -0400
+Processing by CarriersController#taxi_chart as JSON
+  [1m[36mCarrier Load (0.3ms)[0m  [1mSELECT "carriers".* FROM "carriers"[0m
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/rate_chart" for ::1 at 2016-04-05 01:36:37 -0400
+Processing by CarriersController#rate_chart as JSON
+  [1m[35mCarrier Load (1.2ms)[0m  SELECT "carriers".* FROM "carriers"
+Completed 200 OK in 5ms (Views: 1.1ms | ActiveRecord: 1.2ms)
